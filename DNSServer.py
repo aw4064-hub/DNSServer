@@ -30,12 +30,12 @@ def generate_aes_key(password, salt):
     key = base64.urlsafe_b64encode(key)
     return key
 
-# Lookup details on fernet in the cryptography.io documentation    
+# Lookup details on fernet in the cryptography.io documentation
 def encrypt_with_aes(input_string, password, salt):
     key = generate_aes_key(password, salt)
     f = Fernet(key)
     encrypted_data = f.encrypt(input_string.encode('utf-8')) #call the Fernet encrypt method
-    return encrypted_data    
+    return encrypted_data
 
 def decrypt_with_aes(encrypted_data, password, salt):
     key = generate_aes_key(password, salt)
@@ -44,13 +44,13 @@ def decrypt_with_aes(encrypted_data, password, salt):
     return decrypted_data.decode('utf-8')
 
 salt = 'Tandon'.encode('utf-8') # Remember it should be a byte-object
-password = 'aw4064@nyu.edu'
-input_string = 'AlwaysWatching'
+password = "aw4064@nyu.edu"
+input_string = "AlwaysWatching"
 
 encrypted_value = encrypt_with_aes(input_string, password, salt) # exfil function
 decrypted_value = decrypt_with_aes(encrypted_value, password, salt)  # exfil function
 
-# For future use    
+# For future use
 def generate_sha256_hash(input_string):
     sha256_hash = hashlib.sha256()
     sha256_hash.update(input_string.encode('utf-8'))
@@ -87,14 +87,14 @@ dns_records = {
     dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
     dns.rdatatype.NS: 'ns1.nyu.edu.'
 },
-   
+
     # Add more records as needed (see assignment instructions!
 }
 
 def run_dns_server():
     # Create a UDP socket and bind it to the local IP address (what unique IP address is used here, similar to webserver lab) and port (the standard port for DNS)
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Research this
-    server_socket.bind(('127.0.0.1', 53))
+    server_socket.bind(("", 53))
 
     while True:
         try:
